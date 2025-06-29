@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Crypto Mining App</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://inapp.telega.io/sdk/v1/sdk.js"></script>
@@ -155,9 +155,15 @@
 
     document.getElementById("referralLink").value = `https://t.me/tonbot?start=${userId}`;
 
-    ads.ad_show({
-      adBlockUuid: "39e2e4d6-14d6-4e56-b97d-6750a9c22caa",
-      container_id: "ad_container"
+    window.addEventListener('load', () => {
+      if (ads && typeof ads.ad_show === 'function') {
+        ads.ad_show({
+          adBlockUuid: "39e2e4d6-14d6-4e56-b97d-6750a9c22caa",
+          container_id: "ad_container"
+        });
+      } else {
+        console.warn("Publicité non chargée correctement.");
+      }
     });
   </script>
 </body>

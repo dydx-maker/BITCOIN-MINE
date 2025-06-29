@@ -5,18 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crypto Mining App</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://inapp.telega.io/sdk/v1/sdk.js"></script>
+  <script>
+    const ads = window.TelegaIn.AdsController.create_miniapp({
+      token: 'b713f7e7-3946-44ee-b6a4-d999e772d707'
+    });
+  </script>
   <style>
-    <script src="https://inapp.telega.io/sdk/v1/sdk.js"></script>
-<script>
-  const ads = window.TelegaIn.AdsController.create_miniapp({
-    token: 'b713f7e7-3946-44ee-b6a4-d999e772d707' });
-</script>
     body {
       font-family: Arial, sans-serif;
       background-color: #0d1117;
       color: white;
       margin: 0;
       padding: 20px;
+      padding-bottom: 80px; /* pour laisser de la place à la pub */
     }
     .container {
       max-width: 500px;
@@ -26,9 +28,6 @@
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
-   ads.ad_show({
-  adBlockUuid: "39e2e4d6-14d6-4e56-b97d-6750a9c22caa"
-});
     h1 {
       color: #f7931a;
       text-align: center;
@@ -53,6 +52,16 @@
       font-weight: bold;
       color: #0f0;
     }
+    .ad-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      text-align: center;
+      padding: 10px 0;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -66,16 +75,23 @@
     </div>
   </div>
 
+  <div class="ad-container" id="ad_container"></div>
+
   <script>
     let balance = 0;
     let tg = window.Telegram.WebApp;
     document.getElementById("username").textContent = tg.initDataUnsafe.user?.first_name || "Utilisateur";
-    
+
     function mineCrypto() {
       const gain = 0.0000001;
       balance += gain;
       document.getElementById("balance").textContent = balance.toFixed(8) + " BTC";
     }
+
+    ads.ad_show({
+  adBlockUuid: "39e2e4d6-14d6-4e56-b97d-6750a9c22caa",
+  container_id: "ad_container"
+});
   </script>
 </body>
 </html>
